@@ -13,13 +13,23 @@
 #include "tm4c123gh6pm.h"
 
 // ***** 2. Global Declarations Section *****
-
+unsigned long in; //eja
 
 // FUNCTION PROTOTYPES: Each subroutine defined
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 
 // ***** 3. Subroutines Section *****
+void delay100ms(unsigned long time) { //eja
+	unsigned long i; //eja
+	while (time > 0) { //eja
+		i = 1333333; //eja
+		while (i > 0) { //eja
+			i = i - 1; //eja
+		} //eja
+		time = time - 1; //eja
+	} //eja
+} //eja
 
 // PE0, PB0, or PA2 connected to positive logic momentary switch using 10k ohm pull down resistor
 // PE1, PB1, or PA3 connected to positive logic LED through 470 ohm current limiting resistor
