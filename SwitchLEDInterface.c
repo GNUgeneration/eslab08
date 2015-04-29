@@ -13,6 +13,7 @@
 #include "tm4c123gh6pm.h"
 
 // ***** 2. Global Declarations Section *****
+unsigned long in; //eja
 
 // FUNCTION PROTOTYPES: Each subroutine defined
 void DisableInterrupts(void); // Disable interrupts
@@ -25,12 +26,18 @@ void EnableInterrupts(void);  // Enable interrupts
 // To avoid damaging your hardware, ensure that your circuits match the schematic
 // shown in Lab8_artist.sch (PCB Artist schematic file) or 
 // Lab8_artist.pdf (compatible with many various readers like Adobe Acrobat).
-int main(void){ 
+int main(void){ unsigned long volatile delay; 
 //**********************************************************************
 // The following version tests input on PE0 and output on PE1
 //**********************************************************************
   TExaS_Init(SW_PIN_PE0, LED_PIN_PE1);  // activate grader and set system clock to 80 MHz
-  
+	SYSCTL_RCGC2_R  = SYSCTL_RCGC2_R | SYSCTL_RCGC2_GPIOE; //eja
+	delay = SYSCTL_RCGC2_R; //eja
+	GPIO_PORTE_AMSEL_R = GPIO_PORTE_AMSEL_R & ~0x03; //eja
+	GPIO_PORTE_PCTL_R = GPIO_PORTE_PCTL_R & ~0x000000FF; //eja
+	GPIO_PORTE_DIR_R = GPIO_PORTE_DIR_R | 0x02; //eja
+	GPIO_PORTE_DIR_R = GPIO_PORTE_DIR_R & ~0x01; //eja
+	
 	
   EnableInterrupts();           // enable interrupts for the grader
   while(1){
