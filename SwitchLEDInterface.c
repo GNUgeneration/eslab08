@@ -31,7 +31,7 @@ void PortE_Init(void) { unsigned long volatile delay;//eja
 	GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x08;
 }
 
-void delay100ms(unsigned long time) { //eja
+void Delay100ms(unsigned long time) { //eja
 	unsigned long i;
 	while (time > 0) { //eja
 		i = 1333333; //eja
@@ -55,7 +55,14 @@ int main(void){
 	
   EnableInterrupts();           // enable interrupts for the grader
   while(1){
-    
+		Delay100ms(1); //eja
+		in = GPIO_PORTE_DATA_R&0x04; //eja
+    if (in == 1) {
+			GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R ^ 0x08;
+		}
+		if (in == 0) {
+			GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x08;
+		}
   }
   
 }
