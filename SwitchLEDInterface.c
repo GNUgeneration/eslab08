@@ -15,38 +15,21 @@
 // ***** 2. Global Declarations Section *****
 unsigned long in; //eja
 
+// My Function Prototypes:
+void delay100ms(unsigned long time); //eja
+
 // FUNCTION PROTOTYPES: Each subroutine defined
 void DisableInterrupts(void); // Disable interrupts
-void EnableInterrupts(void);  // Enable interrupts
+void EnableInterrupts(void); // Enable interrupts
 
 // ***** 3. Subroutines Section *****
-void Toggle_LED_If_1(void) { //eja
-	if (in == 1) { //eja
-		GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R ^ 0x0008; //eja
-	} //eja
-} //eja
-
-void LED_On_Solid_If_0(void) { //eja
-	if (in == 0) { //eja
-		GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x0008; //eja
-	} //eja
-} //eja
 
 // PE0, PB0, or PA2 connected to positive logic momentary switch using 10k ohm pull down resistor
 // PE1, PB1, or PA3 connected to positive logic LED through 470 ohm current limiting resistor
 // To avoid damaging your hardware, ensure that your circuits match the schematic
 // shown in Lab8_artist.sch (PCB Artist schematic file) or 
 // Lab8_artist.pdf (compatible with many various readers like Adobe Acrobat).
-void Delay100ms(unsigned long time) { //eja
-	unsigned long i; //eja
-	while (time > 0) { //eja
-		i = 1333333; //eja
-		while (i > 0) { //eja
-			i = i - 1; //eja
-		} //eja
-		time = time - 1; //eja
-	} //eja
-} //eja
+
 
 int main(void) {
 	unsigned long volatile delay; //eja
@@ -60,18 +43,30 @@ int main(void) {
 	GPIO_PORTE_PCTL_R = GPIO_PORTE_PCTL_R & ~0x000000FF; //eja
 	GPIO_PORTE_DIR_R = GPIO_PORTE_DIR_R | 0x02; //eja
 	GPIO_PORTE_DIR_R = GPIO_PORTE_DIR_R & ~0x01; //eja
-	GPIO_PORTE_DEN_R = GPIO_PORTE_DEN_R | 0x0004; //eja
-	GPIO_PORTE_DEN_R = GPIO_PORTE_DEN_R | 0x0008; //eja
 	GPIO_PORTE_PUR_R = 0x00000000; //eja
 	
 	GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x0008; //eja
   EnableInterrupts();           // enable interrupts for the grader
   while(1){
-		Delay100ms(1); //eja
-		in = GPIO_PORTE_DATA_R&0x0004; //eja
+		delay100ms(1); //eja
+		in = GPIO_PORTE_DATA_R&0x0008; //eja
 		
-		Toggle_LED_If_1(); // eja
-		LED_On_Solid_If_0(); //eja
+		if (in == 1) {
+			
+		}
+		if (in == 0) {
+			
+		}
   }
-  
 }
+
+void delay100ms(unsigned long time) { //eja
+	unsigned long i; //eja
+	while (time > 0) { //eja
+		i = 1333333; //eja
+		while (i > 0) { //eja
+			i = i - 1; //eja
+		} //eja
+		time = time - 1; //eja
+	} //eja
+} //eja
