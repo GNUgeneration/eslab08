@@ -57,21 +57,22 @@ int main(void) {
 	GPIO_PORTE_DIR_R = GPIO_PORTE_DIR_R | 0x02; //eja
 	GPIO_PORTE_DIR_R = GPIO_PORTE_DIR_R & ~0x01; //eja
 	
-	GPIO_PORTE_DEN_R = GPIO_PORTE_DEN_R | 0x01; //eja
-	GPIO_PORTE_DEN_R = GPIO_PORTE_DEN_R | 0x01; //eja
+	// After this point is not copied from my professors:
 	
-	GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x10; //eja
+	GPIO_PORTE_DEN_R = GPIO_PORTE_DEN_R | 0x0008; //eja
+	GPIO_PORTE_DEN_R = GPIO_PORTE_DEN_R | 0x0004; //eja
 	
+	GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x0008; //eja
   EnableInterrupts();           // enable interrupts for the grader
   while(1){
 		delay100ms(1); //eja
-		in = GPIO_PORTE_DATA_R&0x10; //eja
+		in = GPIO_PORTE_DATA_R&0x0004; //eja
 		
 		if (in == 1) { //eja
-			GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R ^ 0x01; //eja
+			GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R ^ 0x0008; //eja
 		} //eja
-		if (in == 0) { //eja
-			GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x01; //eja
+		else { //eja
+			GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x0008; //eja
 		} //eja
   }
 }
