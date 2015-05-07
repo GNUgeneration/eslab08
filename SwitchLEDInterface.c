@@ -52,11 +52,23 @@ int main(void){
 	GPIO_PORTE_PCTL_R = GPIO_PORTE_PCTL_R & ~0x000000FF; //eja
 	GPIO_PORTE_DIR_R = GPIO_PORTE_DIR_R | 0x02; //eja
 	GPIO_PORTE_DIR_R = GPIO_PORTE_DIR_R & ~0x01; //eja
+	// After this point is copied from my proffessors.
 	
+	GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x08; //eja
 	
   EnableInterrupts();           // enable interrupts for the grader
   while(1){
-    
-  }
+		
+    delay100ms(1); //eja
+		in = GPIO_PORTE_DATA_R&0x04; //eja
+		
+		if (in == 1) { //eja
+			GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R ^ 0x08; //eja
+		} //eja
+		
+		if (in == 0) { //eja
+			GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x08; //eja
+		} //eja
 	
+	}
 }
