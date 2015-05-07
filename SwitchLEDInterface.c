@@ -15,24 +15,9 @@
 // ***** 2. Global Declarations Section *****
 unsigned long in; //eja
 
-// My Functions:
-
-// Function 1:
-void delay100ms(unsigned long time) { //eja
-	unsigned long i; //eja
-	while (time > 0) { //eja
-		i = 1333333; //eja
-		while (i > 0) { //eja
-			i = i - 1; //eja
-		} //eja
-		time = time - 1; //eja
-	} //eja
-} //eja
-
-
 // FUNCTION PROTOTYPES: Each subroutine defined
 void DisableInterrupts(void); // Disable interrupts
-void EnableInterrupts(void); // Enable interrupts
+void EnableInterrupts(void);  // Enable interrupts
 
 // ***** 3. Subroutines Section *****
 
@@ -42,39 +27,36 @@ void EnableInterrupts(void); // Enable interrupts
 // shown in Lab8_artist.sch (PCB Artist schematic file) or 
 // Lab8_artist.pdf (compatible with many various readers like Adobe Acrobat).
 
+void delay100ms(unsigned long t) { //eja
+	unsigned long i; //eja
+	while (t > 0) { //eja
+		i = 1333333; //eja
+		while (i > 0) { //eja
+			i = i - 1; //eja
+		} //eja
+		t = t - 1; //eja
+	} //eja
+} //eja
 
-int main(void) {
+int main(void){
+	
 	unsigned long volatile delay; //eja
+	
 //**********************************************************************
 // The following version tests input on PE0 and output on PE1
 //**********************************************************************
   TExaS_Init(SW_PIN_PE0, LED_PIN_PE1);  // activate grader and set system clock to 80 MHz
-	
-	SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOE; //eja
+  SYSCTL_RCGC2_R = SYSCTL_RCGC2_R | SYSCTL_RCGC2_GPIOE; //eja
 	delay = SYSCTL_RCGC2_R; //eja
 	GPIO_PORTE_AMSEL_R = GPIO_PORTE_AMSEL_R & ~0x03; //eja
 	GPIO_PORTE_PCTL_R = GPIO_PORTE_PCTL_R & ~0x000000FF; //eja
 	GPIO_PORTE_DIR_R = GPIO_PORTE_DIR_R | 0x02; //eja
 	GPIO_PORTE_DIR_R = GPIO_PORTE_DIR_R & ~0x01; //eja
 	
-	// After this point is not copied from my professors:
 	
-	GPIO_PORTE_DEN_R = GPIO_PORTE_DEN_R | 0x0008; //eja
-	GPIO_PORTE_DEN_R = GPIO_PORTE_DEN_R | 0x0004; //eja
-	
-	GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x0008; //eja
   EnableInterrupts();           // enable interrupts for the grader
   while(1){
-		delay100ms(1); //eja
-		in = GPIO_PORTE_DATA_R&0x0004; //eja
-		
-		if (in == 1) { //eja
-			GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R ^ 0x0008; //eja
-		} //eja
-		else { //eja
-			GPIO_PORTE_DATA_R = GPIO_PORTE_DATA_R | 0x0008; //eja
-		} //eja
+    
   }
+	
 }
-
-
